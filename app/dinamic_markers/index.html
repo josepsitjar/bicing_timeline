@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBzaXRqYXIiLCJhIjoiNXhaUDE0byJ9.f72o2M2gG-g0TqZlIemYvg';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+    center: [-74.50, 40], // starting position [lng, lat]
+    zoom: 2 // starting zoom
+});
+
+// Create a divicon
+var icon = L.divIcon({
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+  popupAnchor: [10, 0],
+  shadowSize: [0, 0],
+  className: 'animated-icon my-icon',
+  html: ''
+});
+
+//marker latlng
+var ll = L.latLng(40.795, -73.953)
+
+// create marker
+var marker = L.marker(ll, {
+  icon: icon,
+  title: 'look at me!'
+})
+
+marker.addTo(map)
+
+// do stuff after marker has been added
+marker.on('add', function(){
+
+  doAnimations()
+  // putting this in setInterval so it runs forever
+  setInterval(function(){
+    doAnimations()
+  }, 5000)
+})
+  
+function doAnimations(){
+   var myIcon = document.querySelector('.my-icon')
+  
+   setTimeout(function(){
+      myIcon.style.width = '50px'
+      myIcon.style.height = '50px'
+      myIcon.style.marginLeft = '-25px'
+      myIcon.style.marginTop = '-25px'
+    }, 1000)
+
+    setTimeout(function(){
+      myIcon.style.borderRadius = '10%'
+      myIcon.style.backgroundColor = 'skyblue'
+    }, 2000)
+
+    setTimeout(function(){
+      myIcon.style.width = '30px'
+      myIcon.style.height = '30px'
+      myIcon.style.borderRadius = '50%'
+      myIcon.style.marginLeft = '-15px'
+      myIcon.style.marginTop = '-15px'
+    }, 3000)
+}
+</script>
+
+</body>
